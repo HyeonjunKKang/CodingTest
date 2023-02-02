@@ -1,43 +1,35 @@
 import Foundation
 
-import Foundation
-
 func solution(_ answers:[Int]) -> [Int] {
-    //각 수험생(1, 2, 3번)들은 아래의 정답을 반복합니다
-    let arepeat = [1, 2, 3, 4, 5]
-    let brepeat = [2, 1, 2, 3, 2, 4, 2, 5]
-    let crepeat = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
-    //각 수험생별 정답의 수를 저장합니다. 3명이므로 3번 repeat합니다.
-    var counting = Array(repeating: 0, count: 3)
+    //1번: 12345
+    //2번: 21232425
+    //3번: 3311224455
+    let supo1 = [1, 2, 3, 4, 5]
+    let supo2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    let supo3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
     
-    //i는 0부터 (answers의 갯수-1)까지 순회하게됩니다.
-    for i in 0..<answers.count{
-        //%5처리를 해주게 되면 i는 0부터 4까지 반복합니다.
-        //0 % 5 = 0
-        //1 % 5 = 1
-        //2 % 5 = 2
-        //3 % 5 = 3
-        //4 % 5 = 4
-        //5 % 5 = 0
-        //6 % 5 = 1
-        //같은 원리로 b, c,도 % 8, % 10을 해줍니다.
-        if(answers[i] == arepeat[i%5]){ counting[0] += 1 }
-        if(answers[i] == brepeat[i%8]){ counting[1] += 1 }
-        if(answers[i] == crepeat[i%10]){ counting[2] += 1 }
+    var cnt = [0, 0, 0]
+    
+    for idx in 0..<answers.count {
+        if answers[idx] == supo1[idx % supo1.count] {
+            cnt[0] += 1
+        }
+        if answers[idx] == supo2[idx % supo2.count] {
+            cnt[1] += 1
+        }
+        if answers[idx] == supo3[idx % supo3.count] {
+            cnt[2] += 1
+        }
     }
     
-    //최대 정답수를 저장합니다.
-    let maxcount = counting.max()
-    
-    //결과를 return할 배열입니다.
+    let maxscore = cnt.max()
     var result = [Int]()
-    
-    //3명이므로 0, 1, 2번째의 요소들에 접근합니다.
-    for i in 0..<3{
-        //만약 각 요소의 수가 maxcount와 같다면 result배열에 추가해줍니다.
-                                    // i + 1인 이유는 0번요소는 1번수험생을 뜻하기 떄문입니다.
-        if( counting[i] == maxcount) { result.append( i + 1 )}
+    for idx in 0...2{
+        if cnt[idx] == maxscore{
+            result.append(idx + 1)
+        }
     }
-    
     return result
 }
+
+solution([1, 2, 3, 4, 5])
